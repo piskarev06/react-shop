@@ -12,6 +12,38 @@ export function Shop() {
   const [order, setOrder] = useState([])
   const [isBasketShow, setBasketShow] = useState(false)
 
+  const incrementQuantity = (id) => {
+    const newOrder = order.map((el) => {
+      if (el.id === id) {
+        const newQuantity = el.quantity + 1
+        return {
+          ...el,
+          quantity: newQuantity,
+        }
+      } else {
+        return el
+      }
+    })
+
+    setOrder(newOrder)
+  }
+
+  const decrementQuantity = (id) => {
+    const newOrder = order.map((el) => {
+      if (el.id === id) {
+        const newQuantity = el.quantity - 1
+        return {
+          ...el,
+          quantity: newQuantity,
+        }
+      } else {
+        return el
+      }
+    })
+
+    setOrder(newOrder)
+  }
+
   const addToBasket = (item) => {
     const itemIndex = order.findIndex((orderItem) => orderItem.id === item.id)
 
@@ -36,6 +68,14 @@ export function Shop() {
 
       setOrder(newOrder)
     }
+  }
+
+  const deleteBasketItem = (id) => {
+    setOrder(
+      order.filter((el) => {
+        return el.id !== id
+      }),
+    )
   }
 
   const handleBasketShow = () => {
@@ -63,7 +103,15 @@ export function Shop() {
     <main className='container content'>
       <Cart quantity={order.length} handleBasketShow={handleBasketShow} />
       {loading ? <Preloader /> : <GoodsList addToBasket={addToBasket} goods={goods} />}
-      {isBasketShow && <BasketList order={order} handleBasketShow={handleBasketShow} />}
+      {isBasketShow && (
+        <BasketList
+          deleteBasketItem={deleteBasketItem}
+          order={order}
+          handleBasketShow={handleBasketShow}
+          incrementQuantity={incrementQuantity}
+          decrementQuantity={decrementQuantity}
+        />
+      )}
     </main>
   )
 }
