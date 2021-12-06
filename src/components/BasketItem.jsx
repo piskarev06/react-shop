@@ -1,34 +1,28 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ShopContext } from '../context'
 
-export function BasketItem({
-  id,
-  name,
-  price,
-  quantity,
-  deleteBasketItem,
-  incrementQuantity,
-  decrementQuantity,
-}) {
+export function BasketItem({ id, name, price, quantity }) {
+  const { removeFromBasket, decQuantity, incQuantity } = useContext(ShopContext)
   return (
     <li className='collection-item'>
       {name}{' '}
       {quantity === 1 ? (
-        <i onClick={() => deleteBasketItem(id)} className='material-icons basket-quantity'>
+        <i onClick={() => removeFromBasket(id)} className='material-icons basket-quantity'>
           remove
         </i>
       ) : (
-        <i onClick={() => decrementQuantity(id)} className='material-icons basket-quantity'>
+        <i onClick={() => decQuantity(id)} className='material-icons basket-quantity'>
           remove
         </i>
       )}{' '}
       х{quantity}{' '}
-      <i onClick={() => incrementQuantity(id)} className='material-icons basket-quantity'>
+      <i onClick={() => incQuantity(id)} className='material-icons basket-quantity'>
         add
       </i>{' '}
       = {price * quantity}
       <span
         onClick={() =>
-          incrementQuantity({
+          incQuantity({
             id,
             name,
             price,
@@ -36,9 +30,9 @@ export function BasketItem({
           })
         }>
         {' '}
-        плюс
+        v-bucks
       </span>
-      <span onClick={() => deleteBasketItem(id)} className='secondary-content'>
+      <span onClick={() => removeFromBasket(id)} className='secondary-content'>
         <i className='material-icons basket-delete'>close</i>
       </span>
     </li>

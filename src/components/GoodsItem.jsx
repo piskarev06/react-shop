@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-export function GoodsItem({ id, name, description, price, full_background, addToBasket }) {
+import { ShopContext } from '../context'
+
+export function GoodsItem({ id, name, description, price, full_background }) {
+  const { addToBasket } = useContext(ShopContext)
+
   return (
     <div className='card'>
       <div className='card-image'>
@@ -22,9 +26,7 @@ export function GoodsItem({ id, name, description, price, full_background, addTo
           className='btn'>
           Купить
         </button>
-        <span style={{ fontSize: '1.5rem' }} className='right'>
-          {price} V-Bucks
-        </span>
+        <span className='right good-price'>{price} V-Bucks</span>
       </div>
     </div>
   )

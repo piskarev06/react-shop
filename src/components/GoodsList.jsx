@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ShopContext } from '../context'
 
 import { GoodsItem } from './GoodsItem'
 
-export function GoodsList({ goods = [], addToBasket }) {
+export function GoodsList() {
+  const { goods = [] } = useContext(ShopContext)
+
   if (!goods.length) {
     return <h3>Nothing here</h3>
   }
@@ -10,7 +13,7 @@ export function GoodsList({ goods = [], addToBasket }) {
   return (
     <div className='goods'>
       {goods.map((el) => (
-        <GoodsItem addToBasket={addToBasket} key={el.id} {...el} />
+        <GoodsItem key={el.id} {...el} />
       ))}
     </div>
   )
